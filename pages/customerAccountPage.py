@@ -31,3 +31,6 @@ def verifySuccefullDeposit(self):
     depositSuccessElement = wait.until(
         EC.visibility_of_element_located((By.XPATH, "//span[contains(.,'Deposit Successful')]")))
     depositSuccessElement.is_displayed()
+
+def logout(self):
+    self.driver.find_element(By.XPATH, "//button[contains(text(),'Logout')]").click()

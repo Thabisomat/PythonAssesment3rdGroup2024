@@ -8,6 +8,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 class HomePage:
     text_yourName_xpath = "//label[contains(.,'Your Name :')]"
     text_UserSelect_id = "userSelect"
+    button_login_xpath = "//button[contains(.,'Login')]"
 
     def __init__(self, driver):
         self.driver = driver
@@ -19,3 +20,8 @@ class HomePage:
         wait = WebDriverWait(self.driver, 10)
         UserSelectElement = wait.until(EC.visibility_of_element_located((By.ID, self.text_UserSelect_id)))
         UserSelectElement.Select(userSelect)
+
+    def clickLoginButton(self):
+        wait = WebDriverWait(self.driver, 10)
+        loginElement = wait.until(EC.visibility_of_element_located((By.XPATH, self.button_login_xpath)))
+        loginElement.click()

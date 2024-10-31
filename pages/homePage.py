@@ -1,27 +1,19 @@
-from selenium import webdriver
-from telnetlib import EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-
-class HomePage:
-    text_yourName_xpath = "//label[contains(.,'Your Name :')]"
-    text_UserSelect_id = "userSelect"
-    button_login_xpath = "//button[contains(.,'Login')]"
-
+class LoginPage:
     def __init__(self, driver):
         self.driver = driver
+        self.customer_dropdown = (By.ID, "userSelect")
+        self.login_button = (By.XPATH, "//button[contains(text(), 'Login')]")
 
-    def verifySuccefulLogin(self):
-        self.driver.find_element(By.XPATH, self.text_yourName_xpath).is_displayed()
+    def select_customer(self, customer_name):
+        WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(self.customer_dropdown)).click()
+        customer_option = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable((By.XPATH, f"//option[contains(text(), '{customer_name}')]")))
+        customer_option.click()
 
-    def UserSelect(self, userSelect):
-        wait = WebDriverWait(self.driver, 10)
-        UserSelectElement = wait.until(EC.visibility_of_element_located((By.ID, self.text_UserSelect_id)))
-        UserSelectElement.Select(userSelect)
-
-    def clickLoginButton(self):
-        wait = WebDriverWait(self.driver, 10)
-        loginElement = wait.until(EC.visibility_of_element_located((By.XPATH, self.button_login_xpath)))
-        loginElement.click()
+    def click_login(self):
+        self.driver.find_element(*self.login_button).click()

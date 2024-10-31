@@ -24,3 +24,10 @@ def deposit(self, amount):
     deposit_input = self.driver.find_element(By.XPATH, "//input[@ng-model='amount']")
     deposit_input.send_keys(amount)
     self.driver.find_element(By.XPATH, "//button[text()='Deposit']").click()
+
+
+def verifySuccefullDeposit(self):
+    wait = WebDriverWait(self.driver, 10)
+    depositSuccessElement = wait.until(
+        EC.visibility_of_element_located((By.XPATH, "//span[contains(.,'Deposit Successful')]")))
+    depositSuccessElement.is_displayed()
